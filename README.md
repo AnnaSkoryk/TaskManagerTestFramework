@@ -58,8 +58,12 @@ Steps:
 2. Refresh the page
 
 Expected Result:
-- Main page is shown. 
-- Task is present with checked check box.
+- Main page is displayed after refresh
+- Task remains in the list
+- "Completed" checkbox is checked
+- Task is displayed in completed state:
+  - Title is crossed out
+  - Title and description are displayed in greyed (disabled) style
 
 ### TC-005 Uncheck 'Completed' checkBox
 Preconditions:
@@ -71,8 +75,12 @@ Steps:
 2. Refresh the page
 
 Expected Result:
-- Main page is shown. 
-- Task is present. checkbox "Completed" is unchecked.
+- Main page is displayed after refresh
+- Task remains in the list
+- "Completed" checkbox is unchecked
+- Task is displayed in active state:
+  - Title is not crossed out
+  - Title and description are displayed in normal (non-greyed) style
 
 ### TC-006 Active Tab Validation
 Preconditions:
