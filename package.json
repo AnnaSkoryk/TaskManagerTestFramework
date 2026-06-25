@@ -1,0 +1,23 @@
+{
+  "name": "taskmanagertestframework",
+  "version": "1.0.0",
+  "description": "this is my automation tests for task manager project",
+  "main": "index.js",
+  "scripts": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnnaSkoryk/TaskManagerTestFramework.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/AnnaSkoryk/TaskManagerTestFramework/issues"
+  },
+  "homepage": "https://github.com/AnnaSkoryk/TaskManagerTestFramework#readme",
+  "devDependencies": {
+    "@playwright/test": "^1.61.1",
+    "@types/node": "^26.0.1"
+  }
+}
