@@ -20,8 +20,12 @@ Expected Result:
 Preconditions:
 TC-001
 
+Steps:
+1. Validate the success message
+
 Expected Result:
-- Success message is shown for 2 seconds
+- Success message is shown for at least 1 sec.
+- Message text is 'Task added successfully!'
 
 ### TC-011 Validate all fields in created item
 Preconditions:
