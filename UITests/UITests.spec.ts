@@ -15,7 +15,7 @@ test.describe('Smoke tests', () => {
     test('Create task shows success message', async ({ page }) => {
         await methods.CreateNewTask(page, TestData);
         //await methods.CheckSuccessMessage(page, TestData);
-        await methods.CheckTaskExistsOnGrid(page, TestData);
+        await methods.ValidateCreatedTask(page, TestData);
     })
 
 });

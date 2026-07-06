@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "this is my automation tests for task manager project",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "type-check": "tsc --noEmit"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AnnaSkoryk/TaskManagerTestFramework.git"
@@ -18,6 +20,6 @@
   "homepage": "https://github.com/AnnaSkoryk/TaskManagerTestFramework#readme",
   "devDependencies": {
     "@playwright/test": "^1.61.1",
-    "@types/node": "^26.0.1"
+    "@types/node": "^26.1.0"
   }
 }
