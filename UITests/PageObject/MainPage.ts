@@ -13,8 +13,8 @@ export class MainPage {
         this.taskList = page.locator('#taskList');
     }
 
-    private taskCard(textToFind: string): Locator {
-        return this.taskList.locator('.task-info', { hasText: textToFind }).last();
+    private taskElement(textToFind: string): Locator {
+    return this.taskList.locator('li').filter({ hasText: textToFind }).last();
     }
     
     async clickAddButton() {
@@ -32,7 +32,8 @@ export class MainPage {
     }
 
     async isTaskExistsOnGrid(textToFind: string): Promise<boolean> {
-        const newTask = this.taskCard(textToFind);
+        const newTask = this.taskElement(textToFind);
+
         if (await newTask.count() === 0) {
             return false;
         }
@@ -43,13 +44,21 @@ export class MainPage {
 
     async validateTaskDetailsOnGrid(title: string, description: string, dueDate: string, priority: string) {
         const dateHelper = new DateHelper(dueDate);
-        const newTask = this.taskCard(title);
+        const newTask = this.taskElement(title);
+        const newTaskInfo = newTask.locator('.task-info');
 
-        await expect(newTask.locator('.task-title'), `Expected task title to be "${title}"`).toHaveText(title);
-        await expect(newTask.locator('.task-description'), `Expected task description to be "${description}"`).toHaveText(description);
+        await expect(newTaskInfo.locator('.task-title'), `Expected task title to be "${title}"`).toHaveText(title);
+        await expect(newTaskInfo.locator('.task-description'), `Expected task description to be "${description}"`).toHaveText(description);
 
         const formattedDate = dateHelper.getFormattedDate();
-        await expect(newTask.locator('.task-date'), `Expected task due date to be "${dueDate}"`).toHaveText(formattedDate);
-        await expect(newTask.locator('.priority-badge.priority-high'), `Expected task priority to be "${priority}"`).toHaveText(priority);
+        await expect(newTaskInfo.locator('.task-date'), `Expected task due date to be "${dueDate}"`).toHaveText(formattedDate);
+        await expect(newTaskInfo.locator('.priority-badge.priority-high'), `Expected task priority to be "${priority}"`).toHaveText(priority);
+        
+        const checkbox = newTask.locator('.task-complete input[type="checkbox"]');     
+        await expect(checkbox).not.toBeChecked();
+    }
+
+    async getTaskElementCount(): Promise<number>{
+        return await this.taskList.locator('li').count();
     }
 }

@@ -127,10 +127,7 @@ Expected Result:
 * Main page is displayed after refresh
 * Task remains in the list
 * "Completed" checkbox is checked
-* Task is displayed in completed state:
-
-  * Title is crossed out
-  * Title and description are displayed in greyed (disabled) style
+* Task is displayed in completed state (Title is crossed out)
 
 ### TC-005 Uncheck 'Completed' checkBox
 

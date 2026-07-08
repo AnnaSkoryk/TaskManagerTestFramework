@@ -8,6 +8,7 @@ export class CreateTaskPage {
   readonly taskDueDateLocatorById = '#taskDueDate';
   readonly taskPriorityLocatorById = '#taskPriority';
   readonly saveButtonLocatorById = '#saveBtn';
+  readonly cancelButtonLocatorById = '#cancelBtn';
 
   constructor(private page: Page) {}
 
@@ -20,5 +21,9 @@ export class CreateTaskPage {
 
   async clickSaveButton() {
     await this.page.click(this.saveButtonLocatorById);
+  }
+
+  async clickCancelButton() {
+    await this.page.click(this.cancelButtonLocatorById);
   }
 }

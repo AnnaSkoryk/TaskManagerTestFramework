@@ -16,6 +16,14 @@ test.describe('Smoke tests', () => {
         await methods.CreateNewTask(page, TestData);
         //await methods.CheckSuccessMessage(page, TestData);
         await methods.ValidateCreatedTask(page, TestData);
+    });
+
+    test('Cancel create task', async ({ page }) => {
+        await methods.CreateNewTask(page, TestData, true);
+        await methods.CheckTaskElementCreated(page, TestData, false);
     })
 
+    // test('ValidateCompletedTaskAfterReftesh', asynk ({ page }) => {
+    //
+    // })
 });
