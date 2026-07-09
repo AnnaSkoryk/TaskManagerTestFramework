@@ -10,6 +10,6 @@ export const TestData = {
   title: 'New Task',
   description: 'Test description',
   dueDate: '2026-07-15',
-  priority: 'high',
+  priority: 'low',
   successMessage: 'Task added successfully!'
 };

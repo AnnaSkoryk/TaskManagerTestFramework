@@ -47,3 +47,11 @@ export async function CheckTaskElementCreated(page : Page, testData: ITestData, 
             { message: 'Expected task not to be created', timeout: 5000 }
         ).toBe(countOfElementsBeforeCreation);
 }
+
+export async function ValidateTaskCompletedAfterRefresh(page : Page, testData: ITestData){
+    const mainPage = new MainPage(page);
+    await mainPage.setCompleted(testData.title, true);
+    await page.reload();
+
+    await mainPage.validateCompletedTask(testData.title);
+}

@@ -21,9 +21,34 @@ test.describe('Smoke tests', () => {
     test('Cancel create task', async ({ page }) => {
         await methods.CreateNewTask(page, TestData, true);
         await methods.CheckTaskElementCreated(page, TestData, false);
-    })
+    });
 
-    // test('ValidateCompletedTaskAfterReftesh', asynk ({ page }) => {
-    //
-    // })
+    test('Completed Task is present after reftesh', async ({ page }) => {
+        await methods.CreateNewTask(page, TestData);
+        await methods.ValidateTaskCompletedAfterRefresh(page, TestData);
+    });
+
+    test('Active tab validation', async({ page }) => {
+
+    });
+
+    test('Completed tab validation', async({ page }) => {
+
+    });
+
+    test('All tab validation', async({ page }) => {
+
+    });
+
+    test('Create task without Date', async({ page }) => {
+
+    });
+
+    test('Create task with Date before today', async({ page }) => {
+
+    });
+
+    test('Delete task', async({ page }) => {
+
+    })
 });
