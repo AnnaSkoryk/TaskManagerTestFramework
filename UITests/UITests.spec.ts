@@ -29,15 +29,15 @@ test.describe('Smoke tests', () => {
     });
 
     test('Active tab validation', async({ page }) => {
-
+        await methods.ChaeckActiveTab(page);
     });
 
     test('Completed tab validation', async({ page }) => {
-
+        await methods.ChaeckCompletedTab(page);
     });
 
     test('All tab validation', async({ page }) => {
-
+        await methods.ChaeckAllTab(page);
     });
 
     test('Create task without Date', async({ page }) => {

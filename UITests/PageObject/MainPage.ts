@@ -6,6 +6,9 @@ export class MainPage {
     readonly addButton: Locator;
     readonly successMessage: Locator;
     readonly taskList: Locator;
+    readonly activeBtn: Locator;
+    readonly completedBtn: Locator;
+    readonly allBtn: Locator;
 
     private readonly selectors = {
         taskRow: 'li',
@@ -21,6 +24,9 @@ export class MainPage {
         this.addButton = page.locator('#addBtn');
         this.successMessage = page.locator('#successMessage');
         this.taskList = page.locator('#taskList');
+        this.activeBtn = page.locator('#activeBtn');
+        this.completedBtn = page.locator('#completedBtn');
+        this.allBtn = page.locator('#allBtn');
     }
 
     private getTaskRowElements(textToFind: string) {
@@ -72,8 +78,18 @@ export class MainPage {
         await expect(newTask.checkbox, `Expected new task checkbox to be unchecked`).not.toBeChecked();
     }
 
-    async getTaskElementCount(): Promise<number>{
-        return await this.taskList.locator('li').count();
+    async getTaskElementCount(): Promise<number> {
+        return await this.taskList.locator(this.selectors.taskRow).count();
+    }
+
+    async getTaskElementCountWithCompletionStatus(isCompleted: boolean): Promise<number> {
+        if(isCompleted){
+            const checkboxes = this.taskList.locator(`${this.selectors.checkbox}:checked`)
+            return await checkboxes.count();
+        } else {
+            const checkboxes = this.taskList.locator(`${this.selectors.checkbox}:not(:checked)`)
+            return await checkboxes.count();
+        }
     }
 
     async setCompleted(title: string, isCompleted: boolean = false) {
@@ -88,5 +104,17 @@ export class MainPage {
         const newTask = this.getTaskRowElements(title);
         await expect(newTask.checkbox, 'Expected task checkbox to be checked').toBeChecked();
         await expect(newTask.title, 'Expected task title to be crossed with line').toHaveCSS('text-decoration-line', 'line-through');
+    }
+
+    async selectActiveTab(){
+        await this.activeBtn.click();
+    }
+
+    async selectCompletedTab(){
+        await this.completedBtn.click();
+    }
+
+    async selectAllTab(){
+        await this.allBtn.click();
     }
 }

@@ -55,3 +55,28 @@ export async function ValidateTaskCompletedAfterRefresh(page : Page, testData: I
 
     await mainPage.validateCompletedTask(testData.title);
 }
+
+export async function ChaeckActiveTab(page : Page) {
+    const mainPage = new MainPage(page);
+    const countOfActiveTasks = await mainPage.getTaskElementCountWithCompletionStatus(false);
+    await mainPage.selectActiveTab();
+    const countOfTasksInActiveTab = await mainPage.getTaskElementCount();
+    expect(countOfActiveTasks == countOfTasksInActiveTab, 'Count of active tasks in general list is not equal to the count of tasks in active tab').toBe(true);
+}
+
+export async function ChaeckCompletedTab(page : Page) {
+    const mainPage = new MainPage(page);
+    const countOfCompletedTasks = await mainPage.getTaskElementCountWithCompletionStatus(true);
+    await mainPage.selectCompletedTab();
+    const countOfTasksInCompletedTab = await mainPage.getTaskElementCount();
+    expect(countOfCompletedTasks == countOfTasksInCompletedTab, 'Count of completed tasks in general list is not equal to the count of tasks in Completed tab').toBe(true);
+}
+
+export async function ChaeckAllTab(page : Page) {
+    const mainPage = new MainPage(page);
+    const countOfAllTasks =  await mainPage.getTaskElementCount();
+    await mainPage.selectCompletedTab();
+    await mainPage.selectAllTab();
+    const countOfTasksInAllTab = await mainPage.getTaskElementCount();
+    expect(countOfAllTasks == countOfTasksInAllTab, 'Count of tasks in general list is not equal to the count of tasks in All tab').toBe(true);
+}
