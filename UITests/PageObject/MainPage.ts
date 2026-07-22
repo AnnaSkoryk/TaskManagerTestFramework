@@ -9,6 +9,7 @@ export class MainPage {
     readonly activeBtn: Locator;
     readonly completedBtn: Locator;
     readonly allBtn: Locator;
+    readonly styleOfRedElement: string = 'rgb(153, 27, 27)';
 
     private readonly selectors = {
         taskRow: 'li',
@@ -18,6 +19,7 @@ export class MainPage {
         taskDate: '.task-date',
         priorityBadge: '.priority-badge',
         checkbox: '.task-complete input[type="checkbox"]',
+        removeBtn: '.btn-delete',
     };
 
     constructor(private page: Page) {
@@ -40,6 +42,7 @@ export class MainPage {
             date: row.locator(this.selectors.taskInfo).locator(this.selectors.taskDate),
             priorityBadge: row.locator(this.selectors.taskInfo).locator(this.selectors.priorityBadge),
             checkbox: row.locator(this.selectors.checkbox),
+            removeBtn: row.locator(this.selectors.removeBtn),
         };
     }
 
@@ -58,22 +61,30 @@ export class MainPage {
     }
 
     async isTaskExistsOnGrid(textToFind: string): Promise<boolean> {
-        const newTask = this.getTaskRowElements(textToFind)
-
-        if (await newTask.row.count() === 0)
+        const newTask = this.getTaskRowElements(textToFind);
+        if (await newTask.row.count() === 0 || await newTask.title.textContent() != textToFind)
             return false;
         await newTask.row.scrollIntoViewIfNeeded();
         await expect(newTask.row, `Expected task "${textToFind}" to appear in the task list`).toBeVisible();
         return true;
     }
 
-    async validateTaskDetailsOnGrid(title: string, description: string, dueDate: string, priority: string) {
+    async validateTaskDetailsOnGrid(title: string, description: string, priority: string, dueDate: string,) {
         const dateHelper = new DateHelper(dueDate);
         const newTask = this.getTaskRowElements(title);
         await newTask.row.scrollIntoViewIfNeeded();
         await expect(newTask.title, `Expected task title to be "${title}"`).toHaveText(title);
         await expect(newTask.description, `Expected task description to be "${description}"`).toHaveText(description);
-        await expect(newTask.date, `Expected task due date to be "${dueDate}"`).toHaveText(dateHelper.getFormattedDate());
+        if (!dueDate){
+            await expect(newTask.date, `Expected task due date to be "${dueDate}"`).toHaveText('Due: No due date');
+            await expect(newTask.date, 'Expected task due date text colour to be red (rgb(153, 27, 27))').toHaveCSS('color', this.styleOfRedElement);
+        }
+        else {
+            await expect(newTask.date, `Expected task due date to be "${dueDate}"`).toHaveText(dateHelper.getFormattedDate());
+            if (new Date(dueDate) < new Date()){
+                await expect(newTask.date, 'Expected task due date text colour to be red (rgb(153, 27, 27))').toHaveCSS('color', this.styleOfRedElement);
+            }
+        }
         await expect(newTask.priorityBadge, `Expected task priority to be "${priority}"`).toHaveText(priority);
         await expect(newTask.checkbox, `Expected new task checkbox to be unchecked`).not.toBeChecked();
     }
@@ -116,5 +127,11 @@ export class MainPage {
 
     async selectAllTab(){
         await this.allBtn.click();
+    }
+
+    async deleteSelectedTask(title: string) {
+        const newTask = this.getTaskRowElements(title);
+        await newTask.row.scrollIntoViewIfNeeded();
+        await newTask.removeBtn.click();
     }
 }

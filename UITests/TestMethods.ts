@@ -13,7 +13,8 @@ export async function CreateNewTask(page: Page, testData: ITestData, withCancell
     countOfElementsBeforeCreation = await mainPage.getTaskElementCount();
 
     await mainPage.clickAddButton();
-    await createTaskPage.fillTaskForm(testData.title, testData.description, testData.dueDate, testData.priority);
+    await createTaskPage.fillTaskForm(testData.title, testData.description, testData.priority, testData.dueDate);
+
     if (withCancellation) {
         await createTaskPage.clickCancelButton();
         CheckTaskElementCreated(page, testData, false);
@@ -24,6 +25,16 @@ export async function CreateNewTask(page: Page, testData: ITestData, withCancell
     }
 }
 
+export async function DeleteTask(page: Page, testData: ITestData){
+    const mainPage = new MainPage(page);
+    await mainPage.deleteSelectedTask(testData.title);
+}
+
+export async function ValidateTaskIsDeleted(page: Page, testData: ITestData){
+    const mainPage = new MainPage(page);
+    await expect(await mainPage.isTaskExistsOnGrid(testData.title),`Task "${testData.title}" is still exists in the list`).toBe(false);
+}
+
 export async function ValidateSuccessMessage(page : Page, testData: ITestData) {
     const mainPage = new MainPage(page);
     expect(await mainPage.isSuccessMessageVisible(testData.successMessage, 1000), `Expected success message "${testData.successMessage}" to be visible`).toBe(true);
@@ -31,7 +42,7 @@ export async function ValidateSuccessMessage(page : Page, testData: ITestData) {
 
 export async function ValidateCreatedTask(page : Page, testData: ITestData) {
     const mainPage = new MainPage(page);
-    await mainPage.validateTaskDetailsOnGrid(testData.title, testData.description, testData.dueDate, testData.priority);
+    await mainPage.validateTaskDetailsOnGrid(testData.title, testData.description, testData.priority, testData.dueDate);
 }
 
 export async function CheckTaskElementCreated(page : Page, testData: ITestData, isCreated: boolean) {
@@ -52,7 +63,6 @@ export async function ValidateTaskCompletedAfterRefresh(page : Page, testData: I
     const mainPage = new MainPage(page);
     await mainPage.setCompleted(testData.title, true);
     await page.reload();
-
     await mainPage.validateCompletedTask(testData.title);
 }
 

@@ -12,7 +12,7 @@ export class CreateTaskPage {
 
   constructor(private page: Page) {}
 
-  async fillTaskForm(title: string, description: string, dueDate: string, priority: string) {
+  async fillTaskForm(title: string, description: string, priority: string, dueDate: string) {
     await this.page.fill(this.taskTitleLocatorById, title);
     await this.page.fill(this.taskDescriptionLocatorById, description);
     await this.page.fill(this.taskDueDateLocatorById, dueDate);

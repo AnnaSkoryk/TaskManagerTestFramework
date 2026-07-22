@@ -6,10 +6,28 @@ export interface ITestData {
   successMessage: string;
 }
 
-export const TestData = {
+const defaultSuccessMessage = 'Task added successfully!';
+
+export const GeneralTestData = {
   title: 'New Task',
+  description: 'Test description',
+  dueDate: '2028-07-15',
+  priority: 'low',
+  successMessage: defaultSuccessMessage
+};
+
+export const TestDataWoDate = {
+  title: 'New Task without Date',
+  description: 'Test description',
+  dueDate: '',
+  priority: 'low',
+  successMessage: defaultSuccessMessage
+};
+
+export const TestDataWithDateBeforeToday = {
+  title: 'New Task without Date',
   description: 'Test description',
   dueDate: '2026-07-15',
   priority: 'low',
-  successMessage: 'Task added successfully!'
+  successMessage: defaultSuccessMessage
 };
